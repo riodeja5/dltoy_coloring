@@ -1,3 +1,4 @@
+from keras.applications import VGG16
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post
@@ -39,6 +40,11 @@ def post_edit(request, pk):
     return render(request, 'blog/post_edit.html', {'form': form})
 
 def dltoy(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'blog/dltoy.html', {'posts': posts})
+    if request.method == "POST":
+        # TOOD proc dl
+        post = "at if"
+    else:
+        #posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+        post = "at else"
+    return render(request, 'blog/dltoy.html', {'post': post})
 
