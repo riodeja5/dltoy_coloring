@@ -4,6 +4,7 @@
 
     <h1>Upload</h1>
     <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+        <p>{{ post }}</p>
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>
     </form>

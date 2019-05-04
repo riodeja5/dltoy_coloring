@@ -1,8 +1,10 @@
 *.pyc
 *~
+*.swp
 __pychache__
 myvenv
 db.sqlite3
 /static
 .DS_Store
+blog/tmp/tmp_img
 
