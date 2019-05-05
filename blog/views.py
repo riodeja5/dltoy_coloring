@@ -81,19 +81,8 @@ def upload_file(request):
         if form.is_valid():
             print('Debug upload if if')
             handle_uploaded_file(request.FILES['file'])
+            post = predict()
 
-            model = VGG16()
-            img = load_img('blog/tmp/tmp_img', target_size=(224, 224))
-            arr_data = img_to_array(img)
-            arr_data = preprocess_input(arr_data)
-            arr_input = np.stack([arr_data])
-
-            # prediction
-            probs = model.predict(arr_input)
-            results = decode_predictions(probs)
-            print(results[0])
-            print('!#!# Debug End.')
-            post = results[0]
     else:
         print('Debug upload else')
         post = 'else'
@@ -104,6 +93,22 @@ def handle_uploaded_file(f):
     with open('blog/tmp/tmp_img', 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+
+def predict():
+    model = VGG16()
+    img = load_img('blog/tmp/tmp_img', target_size=(224, 224))
+    arr_data = img_to_array(img)
+    arr_data = preprocess_input(arr_data)
+    arr_input = np.stack([arr_data])
+
+    # prediction
+    probs = model.predict(arr_input)
+    results = decode_predictions(probs)
+    print(results[0])
+    print('!#!# Debug End.')
+    post = results[0]
+
+    return post
 
 """
 class Upload(generic.FormView):
