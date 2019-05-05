@@ -1,4 +1,7 @@
+import os
 import numpy as np
+import tensorflow as tf
+from keras.models import load_model 
 from keras.applications import VGG16
 from keras.applications.vgg16 import preprocess_input, decode_predictions
 from keras.preprocessing.image import load_img, img_to_array
@@ -13,6 +16,10 @@ from .forms import UploadFileForm
 
 # Imaginary function to handle an uploaded file.
 # from somewhere import handle_uploaded_file
+
+vgg16_path = 'blog/tmp/VGG16'
+model = load_model(vgg16_path)
+graph = tf.get_default_graph()
 
 def post_new(request):
     if request.method == "POST":
@@ -95,18 +102,21 @@ def handle_uploaded_file(f):
             destination.write(chunk)
 
 def predict():
-    model = VGG16()
-    img = load_img('blog/tmp/tmp_img', target_size=(224, 224))
-    arr_data = img_to_array(img)
-    arr_data = preprocess_input(arr_data)
-    arr_input = np.stack([arr_data])
+    post = None
 
-    # prediction
-    probs = model.predict(arr_input)
-    results = decode_predictions(probs)
-    print(results[0])
-    print('!#!# Debug End.')
-    post = results[0]
+    global graph
+    with graph.as_default():
+        img = load_img('blog/tmp/tmp_img', target_size=(224, 224))
+        arr_data = img_to_array(img)
+        arr_data = preprocess_input(arr_data)
+        arr_input = np.stack([arr_data])
+
+        # prediction
+        probs = model.predict(arr_input)
+        results = decode_predictions(probs)
+        print(results[0])
+        print('!#!# Debug End.')
+        post = results[0]
 
     return post
 
