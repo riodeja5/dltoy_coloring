@@ -17,8 +17,6 @@ from .forms import UploadFileForm
 # Imaginary function to handle an uploaded file.
 # from somewhere import handle_uploaded_file
 
-vgg16_path = 'blog/tmp/VGG16'
-model = load_model(vgg16_path)
 graph = tf.get_default_graph()
 
 def post_new(request):
@@ -106,6 +104,7 @@ def predict():
 
     global graph
     with graph.as_default():
+        model = VGG16()
         img = load_img('blog/tmp/tmp_img', target_size=(224, 224))
         arr_data = img_to_array(img)
         arr_data = preprocess_input(arr_data)
