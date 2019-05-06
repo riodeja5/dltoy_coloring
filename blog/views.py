@@ -92,7 +92,7 @@ def upload_file(request):
 
     else:
         print('Debug upload else')
-        post = 'else'
+        post = ''
         form = UploadFileForm()
     return render(request, 'blog/upload.html', {'form': form, 'post': post})
 

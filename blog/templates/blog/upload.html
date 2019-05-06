@@ -2,12 +2,15 @@
 
 {% block content %}
 
-    <h1>Upload</h1>
+    <h1>Please Upload JPG File.</h1>
+    <h1>You can get Image Prediction.</h1>
     <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-        <p>{{ post }}</p>
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Predict</button>
+        <p>{{ post }}</p>
     </form>
+
+    <p>Powerd by VGG16</p>
 {% endblock %}
 
 
