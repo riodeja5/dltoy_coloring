@@ -17,6 +17,8 @@ from .forms import UploadFileForm
 # Imaginary function to handle an uploaded file.
 # from somewhere import handle_uploaded_file
 
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+tmp_img = os.path.join(THIS_FOLDER, 'tmp/tmp_img')
 graph = tf.get_default_graph()
 
 def post_new(request):
@@ -95,7 +97,8 @@ def upload_file(request):
     return render(request, 'blog/upload.html', {'form': form, 'post': post})
 
 def handle_uploaded_file(f):
-    with open('blog/tmp/tmp_img', 'wb+') as destination:
+    # with open('blog/tmp/tmp_img', 'wb+') as destination:
+    with open(tmp_img, 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
 
@@ -105,7 +108,8 @@ def predict():
     global graph
     with graph.as_default():
         model = VGG16()
-        img = load_img('blog/tmp/tmp_img', target_size=(224, 224))
+        #img = load_img('blog/tmp/tmp_img', target_size=(224, 224))
+        img = load_img(tmp_img, target_size=(224, 224))
         arr_data = img_to_array(img)
         arr_data = preprocess_input(arr_data)
         arr_input = np.stack([arr_data])
