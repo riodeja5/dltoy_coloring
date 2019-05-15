@@ -82,19 +82,28 @@ def dltoy(request):
     return render(request, 'blog/dltoy.html', {'post': post})
 
 def upload_file(request):
+
+    predicted = False
+
     if request.method == 'POST':
         print('Debug upload if')
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             print('Debug upload if if')
             handle_uploaded_file(request.FILES['file'])
-            post = predict()
+            #post = predict()
+            post = None
+            predicted = True
 
     else:
         print('Debug upload else')
         post = ''
         form = UploadFileForm()
-    return render(request, 'blog/upload.html', {'form': form, 'post': post})
+    return render(request, 'blog/upload.html', {
+        'form': form,
+        'post': post,
+        'predicted': predicted,
+    })
 
 def handle_uploaded_file(f):
     # with open('blog/tmp/tmp_img', 'wb+') as destination:
@@ -108,6 +117,7 @@ def predict():
     global graph
     with graph.as_default():
         model = VGG16()
+
         #img = load_img('blog/tmp/tmp_img', target_size=(224, 224))
         img = load_img(tmp_img, target_size=(224, 224))
         arr_data = img_to_array(img)
@@ -121,19 +131,5 @@ def predict():
         print('!#!# Debug End.')
         post = results[0]
 
-    return post
-
-"""
-class Upload(generic.FormView):
-    form_class = UploadForm
-    template_name = 'blog/upload.html'
-
-    def form_valid(self, form):
-        download_url = form.save()
-        context = {
-            'download_url': download_url,
-            'form': form,
-        }
-        return self.render_to_response(context)
-"""
+        return post
 
