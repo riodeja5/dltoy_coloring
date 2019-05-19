@@ -2,8 +2,8 @@
 
 {% block content %}
 
-    <h1>Please Upload JPG File.</h1>
-    <h1>You can get Image Prediction.</h1>
+    <h1>Please Upload JPG File.(Gray Scale)</h1>
+    <h1>You can get Predicted Color Image.</h1>
     <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Predict</button>
