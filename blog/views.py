@@ -20,7 +20,9 @@ from .forms import UploadFileForm
 # from somewhere import handle_uploaded_file
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(THIS_FOLDER, 'static/autoencoder.h5')
 tmp_img = os.path.join(THIS_FOLDER, 'tmp/tmp_img')
+output_img = os.path.join(THIS_FOLDER, '../media/images/output.jpg')
 img_size = 224
 graph = tf.get_default_graph()
 
