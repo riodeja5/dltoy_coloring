@@ -62,7 +62,7 @@ def predict():
 
     global graph
     with graph.as_default():
-        autoencoder = load_model('blog/static/autoencoder.h5')
+        autoencoder = load_model(MODEL_PATH)
 
         input_lists = glob.glob(tmp_img)
         input_lab = get_lab_from_data_list(input_lists)
@@ -91,7 +91,7 @@ def predict():
         input_preds_rgb = np.stack(input_preds_rgb)
 
         # save result
-        cv2.imwrite('media/images/output.jpg', input_preds_rgb[0])
+        cv2.imwrite(output_img, input_preds_rgb[0])
 
         return post
 
